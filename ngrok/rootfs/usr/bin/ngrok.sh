@@ -79,6 +79,10 @@ for id in $(bashio::config "tunnels|keys"); do
   if [[ $metadata != "null" ]]; then
     echo "    metadata: $metadata" >> $configPath
   fi
+  insecure=$(bashio::config "tunnels[${id}].insecure")
+  if [[ $insecure != "null" ]]; then
+    echo "    insecure: $insecure" >> $configPath
+  fi
 done
 configfile=$(cat $configPath)
 bashio::log.debug "Config file: \n${configfile}"
