@@ -44,10 +44,10 @@ for id in $(bashio::config "tunnels|keys"); do
   if [[ $inspect != "null" ]]; then
     echo "    inspect: $inspect" >> $configPath
   fi
-  auth=$(bashio::config "tunnels[${id}].auth")
-  if [[ $auth != "null" ]]; then
-    echo "    auth: $auth" >> $configPath
-  fi
+  #auth=$(bashio::config "tunnels[${id}].auth")
+  #if [[ $auth != "null" ]]; then
+  #  echo "    auth: $auth" >> $configPath
+  #fi
   host_header=$(bashio::config "tunnels[${id}].host_header")
   if [[ $host_header != "null" ]]; then
     echo "    host_header: $host_header" >> $configPath
@@ -91,6 +91,7 @@ for id in $(bashio::config "tunnels|keys"); do
   
 done
 configfile=$(cat $configPath)
+cat $configPath
 bashio::log.debug "Config file: \n${configfile}"
 bashio::log.info "Starting ngrok..."
 ngrok start --config $configPath --all
