@@ -31,7 +31,7 @@
         "name": "hass",
         "proto": "http",
         "addr": 8123,
-        "inspect": false,
+        "inspect": false
       }
     ]
   },
