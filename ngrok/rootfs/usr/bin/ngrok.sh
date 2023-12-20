@@ -19,6 +19,10 @@ if bashio::var.has_value "$(bashio::config 'region')"; then
 else
   echo "No region defined, default region is US."
 fi
+
+bashio::log.debug "Tunnels: $(bashio::config "tunnels|keys")"
+bashio::log.debug "Tunnels: $(bashio::config "tunnels")"
+
 echo "tunnels:" >> $configPath
 for id in $(bashio::config "tunnels|keys"); do
   name=$(bashio::config "tunnels[${id}].name")
@@ -83,6 +87,7 @@ for id in $(bashio::config "tunnels|keys"); do
   if [[ $insecure != "null" ]]; then
     echo "    insecure: $insecure" >> $configPath
   fi
+  
 done
 configfile=$(cat $configPath)
 bashio::log.debug "Config file: \n${configfile}"
