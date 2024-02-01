@@ -1,6 +1,6 @@
 {
   "name": "ngrok Client",
-  "version": "2.1.9",
+  "version": "2.2.0",
   "slug": "ngrok",
   "description": "A ngrok client for Hass.io",
   "init": false,
@@ -26,6 +26,8 @@
     "log_level": "info",
     "auth_token": "",
     "region": "eu",
+    "web_host": "127.0.0.1",
+    "web_allow_hosts": "192.168.1.1,127.0.0.1",
     "tunnels": [
       {
         "name": "hass",
@@ -39,6 +41,8 @@
     "log_level": "list(crit|warn|error|info|debug)",
     "auth_token": "str?",
     "region": "list(us|eu|ap|au|sa|jp|in)?",
+    "web_host": "str?",
+    "web_allow_hosts": "str?",
     "tunnels": [
       {
         "name": "str",

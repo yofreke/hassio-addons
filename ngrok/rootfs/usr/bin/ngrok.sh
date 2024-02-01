@@ -6,9 +6,31 @@ mkdir -p /ngrok-config
 echo "log: stdout" > $configPath
 bashio::log.debug "Web interface port: $(bashio::addon.port 4040)"
 echo "version: 2" >> $configPath
+
+USE_WEB="0"
+WEB_HOST="127.0.0.1"
+WEB_PORT="4040"
 if bashio::var.has_value "$(bashio::addon.port 4040)"; then
-  echo "web_addr: 0.0.0.0:$(bashio::addon.port 4040)" >> $configPath
+  WEB_PORT="$(bashio::addon.port 4040)"
+  USE_WEB="1"
 fi
+if bashio::var.has_value "$(bashio::config 'web_host')"; then
+  WEB_HOST="$(bashio::config 'web_host')"
+  USE_WEB="1"
+fi
+if bashio::var.has_value "$(bashio::config 'web_allow_hosts')"; then
+  echo "web_allow_hosts:" >> $configPath
+  WEB_ALLOW_HOSTS="$(bashio::config 'web_allow_hosts')"
+  for i in ${WEB_ALLOW_HOSTS//,/ }
+  do
+    echo "  - $i" >> $configPath
+  done
+fi
+
+if [ "$USE_WEB" -eq "1" ]; then
+  echo "web_addr: $WEB_HOST:$WEB_PORT" >> $configPath
+fi
+
 if bashio::var.has_value "$(bashio::config 'log_level')"; then
   echo "log_level: $(bashio::config 'log_level')" >> $configPath
 fi
